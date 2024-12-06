@@ -27,7 +27,7 @@ resource "aws_subnet" "publicone" {
 #Public subnet 2
 resource "aws_subnet" "publictwo" {
     vpc_id = aws_vpc.teravpc.id
-    cidr_block = var.cidrpubone
+    cidr_block = var.cidrpubtwo
     map_public_ip_on_launch = true
     availability_zone = "us-east-1b"
     tags = {
@@ -38,7 +38,7 @@ resource "aws_subnet" "publictwo" {
 #Private subnet 1
 resource "aws_subnet" "privatetone" {
     vpc_id = aws_vpc.teravpc.id
-    cidr_block = var.cidrpubone
+    cidr_block = var.cidrprione
     availability_zone = "us-east-1c"
     tags = {
         Name = "Teraprione"
@@ -48,7 +48,7 @@ resource "aws_subnet" "privatetone" {
 #Private subnet 2
 resource "aws_subnet" "privatetwo" {
     vpc_id = aws_vpc.teravpc.id
-    cidr_block = var.cidrpubone
+    cidr_block = var.cidrpritwo
     availability_zone = "us-east-1d"
     tags = {
         Name = "Terapritwo"
@@ -83,27 +83,6 @@ resource "aws_route_table_association" "routeassoc1" {
 resource "aws_route_table_association" "routeassoc2" {
     subnet_id = aws_subnet.publictwo.id
     route_table_id = aws_route_table.RTpub.id
-}
-
-#Route table creation for private
-resource "aws_route_table" "RTpri" {
-    vpc_id = aws_vpc.teravpc.id
-
-    route {
-        cidr_block = var.cidrange
-    }
-}
-
-#Subnet private association 1
-resource "aws_route_table_association" "routeassoc3" {
-    subnet_id = aws_subnet.privatetone.id
-    route_table_id = aws_route_table.RTpri.id
-}
-
-#Subnet private association 2
-resource "aws_route_table_association" "routeassoc4" {
-    subnet_id = aws_subnet.privatetwo.id
-    route_table_id = aws_route_table.RTpri.id
 }
 
 #security group creation
